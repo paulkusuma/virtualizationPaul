@@ -1,3 +1,7 @@
 {
 	"Cek Vbox" : "ada virtual box"
+},
+{
+	"install ubuntu server" : "berhasil diinstall"
+	"ssh server" : "berhasil ssh dengan local pc/host"
 }
