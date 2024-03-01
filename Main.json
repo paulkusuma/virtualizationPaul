@@ -1,7 +1,158 @@
-{
-	"Cek Vbox" : "ada virtual box"
-},
-{
-	"install ubuntu server" : "berhasil diinstall"
-	"ssh server" : "berhasil ssh dengan local pc/host"
-}
+[
+	{
+		"Cek Vbox": "Ada virtual box"
+	},
+	{
+		"Cek VM": "Tidak ada",
+		"Pembuatan VM": {
+			"Membuat VM": "Klik New VM, Create VM",
+			"Name": "UbuntuServer",
+			"Machine Folder": "C:/Users/LENOVO/VirtualBox VMs",
+			"Type": "Linux",
+			"Version": "Ubuntu(64bit)",
+			"Memory Size": "2048mb",
+			"Hard Disk": "Create a virtual hardisk now",
+			"Hard disk file type": "VDI",
+			"Storage on physical": "Dynamically",
+			"File Location & Size": "C:/Users/LENOVO/VirtualBox VMs/UbuntuServer/",
+			"Size": "10Gb"
+		}
+	},
+	{
+		"Menginstall VM UbuntuServer": {
+			"Start": {
+				"Select Start-up disk": "ubuntu-22.04.3-live-server-amd64.iso",
+				"Step 1": "Try or Install UbuntuServer",
+				"Step 2": {
+					"Select Language": "English"
+				},
+				"Step 3": {
+					"Installer Update": "Continue without Updating"
+				},
+				"Step 4": {
+					"Keyboard Configuration": "Layout: English Variant: English"
+				},
+				"Step 5": {
+					"Choice type of install": "Ubuntu Server"
+				},
+				"Step 6": {
+					"Network Connection": "Done"
+				},
+				"Step 7": {
+					"Configure Proxy": "Done"
+				},
+				"Step 8": {
+					"Configure Ubuntu Archive Mirror": "Done"
+				},
+				"Step 9": {
+					"Guided Storage Configuration": "Done"
+				},
+				"Step 10": {
+					"Storage Configuration": "Done"
+				},
+				"Step 11": {
+					"Confirm destructive action": "Continue"
+				},
+				"Step 12": {
+					"Profile Setup": {
+						"your name": "paulkusuma",
+						"your server name": "paulkusuma",
+						"pick a username": "paulkusuma",
+						"Choose password": "paulkusuma",
+						"Confirm Password": "paulkusuma"
+					}
+				},
+				"Step 13": {
+					"Update to Ubuntu Pro": "Skip for now and Continue"
+				},
+				"Step 14": {
+					"SSH setup": "install OpenSSH server and done"
+				},
+				"Step 15": {
+					"Feature Server Snap": "Skip, and done"
+				},
+				"Step 16": {
+					"Finish Installation": "Reboot Now"
+				}
+			},
+			"Installasi Selesai": ["Setelah berhasil menginstall masuk dengan user yang sudah di buat.", "Saya login menggunakan user paulkusuma dan password yang sudah dimasukan", "cek apakah command sudah dapat berjalan."]
+		}
+	},
+	{
+		"Clone VM from Template UbuntuServer": {
+			"UbuntuServer": "Klik kanan, Clone",
+			"Clone Virtual Machine Settings": {
+				"Nama Baru": "UbuntuServer Clone",
+				"Path": "C:/Users/LENOVO/VirtualBox VMs/UbuntuServer Clone/Snapshots",
+				"Mac Address Policy": "Generate New Mac addrs for all new net",
+				"Additional Options": "Keep Disk Names",
+				"Clone type": "Full clone"
+			},
+			"Start Cloning VM": ["Masuk dengan user seperti dalam original vm, disini memakai paulkusuma", "mengubah hostname agar berbeda dengan yang original", "perintah untuk mengubah host name sudo hostnamectl set-hostname new-hostname"],
+			"Menambah User di Cloning": [
+				"perintahnya adalah sudo adduser paulkusuma25",
+				"masukan password agar dapat menambahkan user (password dari user yang sedang login)",
+				"kemudian masukan password untuk user yang akan ditambahkan",
+				"jika sudah pilih corret yes",
+				"dan lakukan reboot dan masuk menggunakan user yang baru"
+			]
+		}
+	},
+	{
+		"Membuat network untuk kedua VM agar saling terhubung dan bisa saling diakses": {
+			"Buka Virtualbox": "pilih file->preferences",
+			"Buka Tab network": "lanjut ke NAT Network dan tambahkan NAT Network",
+			"Setup NAT Network": {
+				"enable network": "ceklist",
+				"Network name": "NatNetworkCoba",
+				"Network CIDR": "10.0.2.0/24",
+				"Network Options": "Support DHCP"
+			},
+			"Setup Port forwarding": {
+				"tambahkan Port Forwarding": {
+					"name": "SSH",
+					"protocol": "TCP",
+					"Host IP": "Kosong",
+					"Host Port": "2222",
+					"Guest IP": "10.0.2.5 (IP ini didapatkan dengan mengecek IP VM clone, dengan syarat nanti setengah ngset adapter Network di VM)"
+				}
+			},
+			"Setup Network untuk masing-masing VM": {
+				"VM Ubuntu": "Klik kanan, Settings->Network->Attached to: NAT Network",
+				"Name": "NatNetworkCoba",
+				"advanced": "Premiscous mode: allow all",
+				"Mac address": "pastikan tidak bertabrakan dengan Mac Address VM UbuntuServer Clone"
+			}
+		}
+	},
+	{
+		"Melakukan ping antar VM dan mengaktifkan SSH antar VM": {
+			"VM UbuntuServer dan UbuntuServer Clone": {
+				"Cek Ip": "Cek ip dengan perintah 'ip a'",
+				"Mencoba ping antar VM": {
+					"VM UbuntuServer": "ping ke IP UbuntuServer Clone",
+					"VM UbuntuServer Clone": "ping ke IP UbuntuServer"
+				},
+				"Mencoba ssh antar VM": {
+					"VM UbuntuServer": "SSH ke IP UbuntuServer Clone, SSH paulkusuma25@10.0.2.5",
+					"Masukan Password UbuntuServerClone": "Masukan password dari user UbuntuServer Clone",
+					"VM UbuntuServer Clone": "SSH ke IP UbuntuServer, SSH paulkusuma@10.0.2.4",
+					"Masukan Password UbuntuServer": "Masukan password dari user UbuntuServer"
+				},
+				"Mengubah localdns agar dapat SSH by name": {
+					"VM UbuntuServer": {
+						"Edit file /etc/hosts": "menggunakan perintah 'sudo nano /etc/hosts'",
+						"Edit isi": "Tambahkan IP dan Nama yang akan digunakan, disini saya isi IP VM Clone",
+						"isi file": "10.0.2.5 pauwerfull25"
+					},
+					"SSH by localdns adalah": "SSH paulkusuma25@pauwerfull25",
+					"keterangan": "paulkusuma25 adalah nama user UbuntuServer, dan pauwerfull25 adalah local dnsnya"
+				},
+				"SSH dari Host ke VM": {
+					"CMD": "ssh -p 2222 paulkusuma@10.0.2.5",
+					"Putty": "127.0.0.1 port 2222"
+				}
+			}
+		}
+	}
+]
