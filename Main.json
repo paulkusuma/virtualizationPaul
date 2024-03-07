@@ -154,5 +154,20 @@
 				}
 			}
 		}
+	},
+
+	{
+		"Settings VM UbuntuServer Clone untuk database server": {
+			"step 1 ": "jalankan vm kemudian login dengan user yang sudah ada",
+			"step 2 ": "kemudian ketikan perintah 'sudo apt update', dan masukan katasandi dari user yang login",
+			"step 3 ": "kemudian jika sudah, install mysql-server dengan perintah 'sudo apt install mysql-server'",
+			"step 4 ": "jika proses instalasi selesai, cek apakah sudah aktif atau belum dengan perintah 'sudo systemctl status mysql.service'",
+			"step 5 ": "jika mysql sudah aktif selanjutnya adalah Melakukan konfigurasi keamanan",
+			"step 6 ": "perintahnya adalah 'sudo mysql_secure_installation', disini akan menampilkan pilihan apakah menggukana validasi atau tidak saya memilih tidak",
+			"step 7 ": "masukan password baru dan akan diberikan beberapa pertanyaan",
+			"step 8 ": "'remove anonymous user= no', 'disallow root login=no', 'remove test database=no', 'reload previlage table=yes'",
+			"step 9 ": "masuk dengan pengguna root 'sudo mysql -u root -p'",
+			"step 10  ": ""
+		}
 	}
 ]
