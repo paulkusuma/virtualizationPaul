@@ -154,5 +154,91 @@
 				}
 			}
 		}
+	},
+
+	{
+		"Settings VM UbuntuServer Clone untuk database server(mysql)": {
+			"step 1 ": "jalankan vm kemudian login dengan user yang sudah ada",
+			"step 2 ": "kemudian ketikan perintah 'sudo apt update', dan masukan katasandi dari user yang login",
+			"step 3 ": "kemudian jika sudah, install mysql-server dengan perintah 'sudo apt install mysql-server'",
+			"step 4 ": "jika proses instalasi selesai, cek apakah sudah aktif atau belum dengan perintah 'sudo systemctl status mysql.service'",
+			"step 5 ": "jika mysql sudah aktif selanjutnya adalah Melakukan konfigurasi keamanan",
+			"step 6 ": "perintahnya adalah 'sudo mysql_secure_installation', disini akan menampilkan pilihan apakah menggukana validasi atau tidak saya memilih tidak",
+			"step 7 ": "masukan password baru dan akan diberikan beberapa pertanyaan",
+			"step 8 ": "'remove anonymous user= no', 'disallow root login=no', 'remove test database=no', 'reload previlage table=yes'",
+			"step 9 ": "masuk dengan pengguna root 'sudo mysql -u root -p'",
+			"step 10  ": ""
+		}
+	},
+	{
+		"Settings VM UbuntuServer untuk web server(Apache2)": {
+			"step 1 ": "jalankan vm kemudian login dengan user yang sudah ada",
+			"step 2 ": "kemudian ketikan perintah 'sudo apt update', dan masukan katasandi dari user yang login",
+			"step 3 ": "kemudian jika sudah, install apache2 dengan perintah 'sudo apt install apache2'",
+			"membuat own website": {
+				"step 1 ": "'sudo mkdir /var/www/cobaApache'",
+				"step 2 ": "masuk ke directory yang di buat 'cd /var/www/cobaApache/'",
+				"step 3 ": "membuat isi web sederhana dengan perintah 'sudo nano index.html' lalu ketik kode html"
+			},
+			"configuring file": {
+				"step 1 ": "masukan ke directory 'cd /etc/apache2/sites-available/'",
+				"step 2 ": "Karena Apache dapat file VirtualHost default, gunakan itu sebagai base.",
+				"step 3 ": "'sudo cp 000-default.conf cobaApache.conf'",
+				"step 4 ": "edit file konfigurasi 'sudo nano cobaApache.conf'",
+				"step 5 ": "ubah tambahkan ServerName disini saya adalah 'cobaApache.example.conf'",
+				"step 6 ": "DocumentRoot arahannya menunjuk ke direktori tempat file situs 'DocumentRoot /var/www/cobaApache/'"
+			},
+			"mengaktifkan file": {
+				"step 1 ": "mengaktifkan file konfigurasi host virtual 'sudo a2ensite cobaApache.conf'",
+				"step 2 ": "restart Apache dengan mengetik 'systemctl apache2 reload'",
+				"step 3 ": "untuk melihat status Apache bisa dilakukan dengan mengetik 'service apache2 status'"
+			}
+		}
+	},
+	{
+		"Membuat Sharedfolder di UbuntuServer": {
+			"step 1 ": "Buat terlebih dahulu folder di host(windows), saya membuat di directory Documents",
+			"step 2 ": "Buat folder, disini saya beri nama 'SharedFolderVboxUbuntuServer' dan didalam folder saya buat file blank txt",
+			"step 3 ": "Jika sudah buka VBOX dan pilih VM Ubuntu Server lalu masuk ke menu Settings",
+			"step 4 ": "Kemudain pilih menu Shared Folders, dan tambahkan Shared Folders",
+			"step 5 ": "Kemudian untuk Folder path bisa klik other dan nanti akan diarahkan ke file explorer windows, cari Folder yang sudah kita buat(step 2)",
+			"step 6 ": "Setelah Folder ditemukan klik Select, dan jika sudah pastikan juga Folder Name adalah nama folder yang kita buat",
+			"step 7 ": "Kemudian checklist juga dibagian Auto mount lalu klik oke",
+			"mounting sharedfolder di Ubuntu Server": {
+				"step 1 ": "nyalakan VM UbuntuServernya dan masuk dengan user login",
+				"step 2 ": "jika sudah masuk buat folder di UbuntuServer dengan perintah sudo 'sudo mkdir /media/Shared' ",
+				"step 3 ": "jika folder sudah dibuat kemudian kita akan mount SharedFolder kita",
+				"step 4 ": "lakukan perintah 'sudo mount -t vboxsf namafolder(diwindows) lokasifolderubuntu'",
+				"step 5 ": "jadi perintah saya adalah sudo mount -t vboxsf SharedFolderVboxUbuntuServer /media/Shared'",
+				"step 6 ": "cek apakah sudah berhasil dengan cara pindah ke directory /media/shared dengan perintah cd",
+				"step 7 ": "jika sudah berada di directory /media/shared kemudian ketikan perintah ls untuk melihat isi directory",
+				"step 8 ": "jika berhasil maka akan terlihat file blank txt yang sudah kita bikin sebelumnya"
+			}
+		}
+	},
+	{
+		"Menginstall Java Compiler JDK dan JRE": {
+			"step 1 ": "lakukan update terlebih dahulu, ketik perintah sudo apt update",
+			"step 2 ": "kemudian install jre dengan perintah 'sudo apt get install default-jre'",
+			"step 3 ": "kemudian install jdk dengan perintah 'sudo apt get install default-jdk'",
+			"step 4 ": "kemudian cek apakah sudah terinstal atau belum dengan perintah 'javac -version'",
+			"step 5 ": "buat folder baru disini saya membuat folder  java_project 'mkdir /java_project'",
+			"step 6 ": "masuk ke directory java_project dan ketik kan perintah 'sudo nano Hello.java' saya akan membuat file java dengan nama Hello",
+			"step 7 ": "lalu ketikan program untuk menampilkan hello world dan simpan",
+
+			"Setup JAVA_HOME Environment ": {
+				"step 1 ": "jika menginstall banyak versi java pilih salah satu 'ketikan perintah sudo update-alternatives --config java'",
+				"step 2 ": "jika sudah maka akan menampilkan path java nya copy pathnya untuk di ste di environment",
+				"step 3 ": "kemudian buka /etc/environment dengan perintah 'sudo nano /etc/environment'",
+				"step 4 ": "kemudian tambahkan path 'JAVA_HOME=/your/installation/path/' di tempat saya pathnya adalah /usr/lib/jvm/java-11-openjdk-amd64/bin/java lalu save "
+			},
+			"Compile dan Running file java": {
+				"step 1 ": "jika sudah membuat program saatnya meng compile dan merunning java program",
+				"step 2 ": "masuk ke directory yang sudah dibuat ditempat saya adalah 'java_project'",
+				"step 3 ": "masukan perintah 'sudo javac hello.java' untuk mengcompile  file .java",
+				"step 4 ": "setelah itu lakukan running  dengan 'sudo java hello'",
+				"step 5 ": "jika berhasil akan menampilkan output 'Hello World' atau sesuai dengan output program yang dibuat"
+			}
+		}
 	}
 ]
