@@ -237,7 +237,7 @@
 				"step 2 ": "masuk ke directory yang sudah dibuat ditempat saya adalah 'java_project'",
 				"step 3 ": "masukan perintah 'sudo javac hello.java' untuk mengcompile  file .java",
 				"step 4 ": "setelah itu lakukan running  dengan 'sudo java hello'",
-				"step 5 ": "jika berhasil akan menampilkan output 'Hello World' atau sesuai dengan output program yang dibuat"
+				"step 5 ": "jika berhasil akan menampilkan output 'Hello World' atau sesuai dengan output program yang dibuat."
 			}
 		}
 	}
