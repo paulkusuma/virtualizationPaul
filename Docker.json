@@ -105,5 +105,60 @@
 				"LABEL": "maintainer=\"Pauwerfull-PaulWijayaVerdaKusuma-215314051\""
 			}
 		}
+	},
+	"UTS2": {
+		"docker-compose.yml": {
+			"version": "3.8",
+			"services": {
+				"web": {
+					"build": "./php",
+					"container_name": "php_app",
+					"ports": ["8080:80"],
+					"depends_on": ["db"],
+					"volumes": ["./php:/var/www/html"],
+					"networks": ["todo_network"]
+				},
+				"db": {
+					"image": "mysql:5.7",
+					"container_name": "mysql_db",
+					"restart": "always",
+					"environment": {
+						"MYSQL_ROOT_PASSWORD": "root_password",
+						"MYSQL_DATABASE": "todolist",
+						"MYSQL_USER": "todo_user",
+						"MYSQL_PASSWORD": "todo_password"
+					},
+					"volumes": ["db_data:/var/lib/mysql", "./sql:/docker-entrypoint-initdb.d"],
+					"networks": ["todo_network"]
+				}
+			},
+			"networks": {
+				"todo_network": {}
+			},
+			"volumes": {
+				"db_data": {}
+			}
+		},
+		"Dockerfile": {
+			"FROM": "php:8.1-apache",
+			"COPY": ". /var/www/html/",
+			"RUN": ["docker-php-ext-install mysqli pdo pdo_mysql", "chown -R www-data:www-data /var/www/html", "a2enmod rewrite"],
+			"LABEL": "maintainer=\"Pauwerfull-PaulWijayaVerdaKusuma-215314051\""
+		},
+		"Project Structure": {
+			"todo_list/": {
+				"docker-compose.yml": "",
+				"php/": {
+					"Dockerfile": "",
+					"index.php": "",
+					"assets/": {
+						"styles.css": ""
+					}
+				},
+				"sql/": {
+					"init.sql": ""
+				}
+			}
+		}
 	}
 }
