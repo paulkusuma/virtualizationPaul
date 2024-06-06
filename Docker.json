@@ -1,0 +1,18 @@
+{
+	"Cek Docker": {
+		"Docker Version": "docker --version",
+		"Install Docker": {
+			"Update Repository": "sudo apt update",
+			"Install Docker": "sudo apt install docker.io",
+			"Start Docker": "sudo systemctl start docker",
+			"Enable Docker": "sudo systemctl enable docker",
+			"Add User to Docker Group": "sudo usermod -aG docker $USER"
+		}
+	},
+	"Pull Docker Image": {
+		"Command": ["docker pull hello-world", "docker pull alpine"]
+	},
+	"Membuat dan Menjalankan Docker Container": {
+		"Command": "docker run -it --name UbuntuServer ubuntu:latest /bin/bash"
+	}
+}
