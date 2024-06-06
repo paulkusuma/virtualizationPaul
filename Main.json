@@ -240,5 +240,24 @@
 				"step 5 ": "jika berhasil akan menampilkan output 'Hello World' atau sesuai dengan output program yang dibuat."
 			}
 		}
+	},
+	{
+		"Deploy Website dengan 2 Server  Apache dan Mysql": {
+			"Apache Server ": {
+				"step 1 ": "Upload folder website  yang ingin di deploy ke server apache, disini saya menggunakan bantuan winscp",
+				"step 2 ": "Buat juga settingan untuk database servernya, disini saya menggunakan file .php",
+				"step 3 ": "Contoh setting saya $servername = 10.0.2.5 $username = paulkusuma $password = Paulkusuma@12345 $dbName = todolist",
+				"step 4 ": "setting ini disesuaikan dengan user yang dibuat di mysql server",
+				"step 5 ": "test terlebih dahulu dengan logika seperti connecction succsess atau failed dengan cara run file php yang mengarahkan koneksi ke databse",
+				"step 6 ": "disini saya membuat website sederhana todolist yang sebelumnya saya buat untuk tugas Pemrograman Platfrom"
+			},
+			"MySQL Server": {
+				"step 1 ": "masuk ke mysql dengan user yang digunakan untuk remote dan user yang memiliki hak akses ke database",
+				"step 2 ": "buat database dan tabel yang diperlukan, sesuaikan dengan frontend yang ada di apache server"
+			}
+		}
+	},
+	{
+		"SELESAI...": {}
 	}
 ]
