@@ -14,5 +14,76 @@
 	},
 	"Membuat dan Menjalankan Docker Container": {
 		"Command": "docker run -it --name UbuntuServer ubuntu:latest /bin/bash"
+	},
+	"Menginstall Software di Container UbuntuServer": {
+		"Menginstall Apache2": {
+			"Start Container": "docker start UbuntuServer",
+			"Exec into Container": "docker exec -it UbuntuServer /bin/bash",
+			"Install Apache2": ["apt update", "apt install apache2 -y", "service apache2 start"]
+		},
+		"Menginstall MySQL Server": {
+			"Start Container": "docker start UbuntuServer",
+			"Exec into Container": "docker exec -it UbuntuServer /bin/bash",
+			"Install MySQL Server": ["apt update", "apt install mysql-server -y", "service mysql start", "mysql_secure_installation"]
+		}
+	},
+	"Cloning Container": {
+		"Commit Container": "docker commit UbuntuServer UbuntuServerImage",
+		"Create Container from Image": "docker run -it --name UbuntuServerClone UbuntuServerImage /bin/bash"
+	},
+	"Membuat Network di Docker": {
+		"Create Docker Network": "docker network create --driver bridge NatNetworkCoba",
+		"Add Containers to Network": ["docker network connect NatNetworkCoba UbuntuServer", "docker network connect NatNetworkCoba UbuntuServerClone"]
+	},
+	"Menghubungkan Container Menggunakan SSH": {
+		"Menginstall OpenSSH Server": ["apt update", "apt install openssh-server -y", "service ssh start"],
+		"Cek IP Address Container": ["docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' UbuntuServer", "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' UbuntuServerClone"],
+		"SSH ke Container Lain": "ssh user@<IP_Address_Container>"
+	},
+	"Menyiapkan Web Server dan Database Server": {
+		"Web Server (Apache2)": {
+			"Buat Folder Website": ["mkdir /var/www/cobaApache", "echo '<html><body><h1>Hello from Docker</h1></body></html>' > /var/www/cobaApache/index.html"],
+			"Konfigurasi Apache": "nano /etc/apache2/sites-available/cobaApache.conf",
+			"Aktifkan Konfigurasi dan Restart Apache": ["a2ensite cobaApache.conf", "systemctl reload apache2"]
+		},
+		"Database Server (MySQL)": {
+			"Masuk ke MySQL": "mysql -u root -p",
+			"Buat Database dan User": ["CREATE DATABASE todolist;", "CREATE USER 'paulkusuma'@'%' IDENTIFIED BY 'Paulkusuma@12345';", "GRANT ALL PRIVILEGES ON todolist.* TO 'paulkusuma'@'%';", "FLUSH PRIVILEGES;"]
+		}
+	},
+	"Menggunakan Docker Compose": {
+		"Membuat File docker-compose.yml": {
+			"Content": {
+				"version": "3",
+				"services": {
+					"web": {
+						"image": "ubuntu:latest",
+						"container_name": "UbuntuServer",
+						"ports": ["80:80"],
+						"networks": ["NatNetworkCoba"],
+						"volumes": ["./webdata:/var/www/cobaApache"],
+						"command": "bash -c 'apt update && apt install -y apache2 && service apache2 start && tail -f /dev/null'"
+					},
+					"db": {
+						"image": "mysql:latest",
+						"container_name": "MySQLServer",
+						"environment": {
+							"MYSQL_ROOT_PASSWORD": "rootpassword",
+							"MYSQL_DATABASE": "todolist",
+							"MYSQL_USER": "paulkusuma",
+							"MYSQL_PASSWORD": "Paulkusuma@12345"
+						},
+						"ports": ["3306:3306"],
+						"networks": ["NatNetworkCoba"]
+					}
+				},
+				"networks": {
+					"NatNetworkCoba": {
+						"driver": "bridge"
+					}
+				}
+			}
+		},
+		"Jalankan Docker Compose": "docker-compose up -d"
 	}
 }
