@@ -85,5 +85,25 @@
 			}
 		},
 		"Jalankan Docker Compose": "docker-compose up -d"
+	},
+	"UTS1": {
+		"Dockerfile": {
+			"Stage 1: Compile Java code": {
+				"FROM": "openjdk:11-jdk-slim AS build",
+				"WORKDIR": "/app",
+				"COPY": "HelloArgv.java .",
+				"RUN": "javac HelloArgv.java"
+			},
+			"Stage 2: Create minimal image": {
+				"FROM": "openjdk:11-jre-slim",
+				"WORKDIR": "/app",
+				"COPY": "--from=build /app/HelloArgv.class .",
+				"ENTRYPOINT": "[\"java\", \"HelloArgv\"]",
+				"CMD": "[\"java\", \"HelloArgv\"]"
+			},
+			"Informasi tentang pembuat image": {
+				"LABEL": "maintainer=\"Pauwerfull-PaulWijayaVerdaKusuma-215314051\""
+			}
+		}
 	}
 }
